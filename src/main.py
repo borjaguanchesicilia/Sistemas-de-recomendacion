@@ -52,7 +52,6 @@ def inicializar():
                         except:
                             print("ERROR: En el formato del fichero.")
                         else:
-                            operacionMedia()
                             correlacionPearson()
                             distanciaCoseno()
                             distanciaEuclidea()

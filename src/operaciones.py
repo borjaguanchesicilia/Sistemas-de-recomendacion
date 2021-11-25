@@ -3,24 +3,17 @@ from math import pow, sqrt
 matriz = []; medias = []
 
 
-def operacionMedia():
+def calcularMedia(calificacionesU, calificacionesV, n):
 
-    global medias
+    sum = 0
+    if (n == 0):
+        ceros = calificacionesU.count(0); n = len(calificacionesU) - ceros
 
-    [medias.append(calcularMedia(i)) for i in matriz]
-        
+    for i in range(len(calificacionesU)):
+        if ((calificacionesU[i] != 0) and (calificacionesV[i] != 0)):
+            sum += calificacionesU[i]
 
-
-def calcularMedia(usuario):
-
-    sum = 0; cont = 0
-    for j in usuario:
-        if j == 0:
-            cont += 1
-        else:
-            sum += j
-    
-    return (sum / (len(usuario) - cont))
+    return (sum / n, n)
 
 
 def funcionPearson(valorItem, media, expo):
@@ -32,14 +25,19 @@ def calcularCorrelacionPearson(u, v):
 
     global matriz
 
+    mediaU = calcularMedia(matriz[u], matriz[v], 0)
+    mediaV = calcularMedia(matriz[v], matriz[u], mediaU[1])
+
+    print(mediaU, mediaV)
+
     sum1 = 0; sum2 = 0; sum3 = 0
 
     for i in range(len(matriz[u])):
         calificacionU = matriz[u][i]; calificacionV = matriz[v][i]
         if ((calificacionU != 0) and (calificacionV != 0)):
-            sum1 += funcionPearson(calificacionU, medias[u], 1) * funcionPearson(calificacionV, medias[v], 1)
-            sum2 += funcionPearson(calificacionU, medias[u], 2)
-            sum3 += funcionPearson(calificacionV, medias[v], 2)
+            sum1 += funcionPearson(calificacionU, mediaU[0], 1) * funcionPearson(calificacionV, mediaV[0], 1)
+            sum2 += funcionPearson(calificacionU, mediaU[0], 2)
+            sum3 += funcionPearson(calificacionV, mediaV[0], 2)
 
     return round((sum1 / (sqrt(sum2) * sqrt(sum3))), 2)
 

@@ -11,6 +11,7 @@ def correlacionPearson():
         else:
             inicio = 0
         for v in range(inicio, len(matriz), 1):
+
             similitud.append((u, v, calcularCorrelacionPearson(u, v)))
 
     print("Correlación de Pearson: \n", similitud, "\n\n")
