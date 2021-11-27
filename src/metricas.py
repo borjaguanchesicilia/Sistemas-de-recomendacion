@@ -1,4 +1,4 @@
-from operaciones import *
+from operacionesMetricas import *
 
 
 def correlacionPearson():
@@ -11,10 +11,10 @@ def correlacionPearson():
         else:
             inicio = 0
         for v in range(inicio, len(matriz), 1):
+            if (u != v):
+                similitud.append((u, v, calcularCorrelacionPearson(u, v)))
 
-            similitud.append((u, v, calcularCorrelacionPearson(u, v)))
-
-    print("Correlación de Pearson: \n", similitud, "\n\n")
+    return similitud
 
 
 def distanciaCoseno():
@@ -29,7 +29,7 @@ def distanciaCoseno():
         for v in range(inicio, len(matriz), 1):
             similitud.append((u, v, calcularDistanciaCoseno(u, v)))
 
-    print("Distancia coseno: \n", similitud, "\n\n")
+    return similitud
 
 
 def distanciaEuclidea():
@@ -44,4 +44,4 @@ def distanciaEuclidea():
         for v in range(inicio, len(matriz), 1):
             similitud.append((u, v, calcularDistanciaEuclidea(u, v)))
 
-    print("Distancia Euclidea: \n", similitud, "\n\n")
+    return similitud

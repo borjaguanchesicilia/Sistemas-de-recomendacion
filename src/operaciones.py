@@ -1,72 +1,52 @@
 from math import pow, sqrt
 
-matriz = []; medias = []
+matriz = []; medias = []; similaridad = []; vecinos = []; predicciones = []
 
 
-def calcularMedia(calificacionesU, calificacionesV, n):
-
-    sum = 0
-    if (n == 0):
-        ceros = calificacionesU.count(0); n = len(calificacionesU) - ceros
-
-    for i in range(len(calificacionesU)):
-        if ((calificacionesU[i] != 0) and (calificacionesV[i] != 0)):
-            sum += calificacionesU[i]
-
-    return (sum / n, n)
-
-
-def funcionPearson(valorItem, media, expo):
-
-    return pow((valorItem - media), expo)
-
-
-def calcularCorrelacionPearson(u, v):
+def lecturaFichero(nombreF):
 
     global matriz
 
-    mediaU = calcularMedia(matriz[u], matriz[v], 0)
-    mediaV = calcularMedia(matriz[v], matriz[u], mediaU[1])
+    fichero = open(nombreF, 'r')
+    valores = []
+    linea = fichero.readline()
+    
+    while linea != "":
+        for j in range(len(linea)):
+            if linea[j] == "-":
+                valores.append(None)
+            elif linea[j] != " " and linea[j] != "\n":
+                valores.append(int(linea[j]))
+        matriz.append(valores); valores = []
+        linea = fichero.readline()
 
-    print(mediaU, mediaV)
-
-    sum1 = 0; sum2 = 0; sum3 = 0
-
-    for i in range(len(matriz[u])):
-        calificacionU = matriz[u][i]; calificacionV = matriz[v][i]
-        if ((calificacionU != 0) and (calificacionV != 0)):
-            sum1 += funcionPearson(calificacionU, mediaU[0], 1) * funcionPearson(calificacionV, mediaV[0], 1)
-            sum2 += funcionPearson(calificacionU, mediaU[0], 2)
-            sum3 += funcionPearson(calificacionV, mediaV[0], 2)
-
-    return round((sum1 / (sqrt(sum2) * sqrt(sum3))), 2)
-
-
-def calcularDistanciaCoseno(u, v):
-
-    global matriz
-
-    sum1 = 0; sum2 = 0; sum3 = 0
-
-    for i in range(len(matriz[u])):
-        calificacionU = matriz[u][i]; calificacionV = matriz[v][i]
-        if ((calificacionU != 0) and (calificacionV != 0)):
-            sum1 += calificacionU * calificacionV
-            sum2 += pow(calificacionU, 2)
-            sum3 += pow(calificacionV, 2)
-
-    return round((sum1 / (sqrt(sum2) * sqrt(sum3))), 2)
+    fichero.close()
 
 
-def calcularDistanciaEuclidea(u, v):
+def escrituraFichero():
 
-    global matriz
+    fichero = open("matrizResultado.txt", 'w')
 
-    sum = 0
+    fichero.write("La matriz con los elementos faltantes es: \n\n")
 
-    for i in range(len(matriz[u])):
-        calificacionU = matriz[u][i]; calificacionV = matriz[v][i]
-        if ((calificacionU != 0) and (calificacionV != 0)):
-            sum += pow((calificacionU - calificacionV), 2)
+    for i in range(len(matriz)):
+        for j in range(len(matriz[i])):
+            fichero.write(str(matriz[i][j])+" ")
+        fichero.write("\n")
 
-    return round(sqrt(sum))
+    fichero.write("\n\nLa similaridad entre cada usuario es: \n\n")
+
+    for i in range(len(similaridad)):
+        fichero.write("Usuario: " + str(similaridad[i][0]) + "  Vecino: " + str(similaridad[i][1]) + " -->  " + str(similaridad[i][2]) + "\n")
+
+    fichero.write("\n\nLos vecinos seleccionados para cada usuario son: \n\n")
+
+    for i in range(len(vecinos)):
+        fichero.write("Usuario: " + str(vecinos[i][0]) + " -->  " + str(vecinos[i][1]) + "\n")
+
+    fichero.write("\n\nLas predicciones hechas han sido: \n\n")
+
+    for i in range(len(predicciones)):
+        fichero.write("Usuario: " + str(predicciones[i][0]) + "  Item: " + str(predicciones[i][1]) + "  Vecinos: " + str(predicciones[i][2]) + "  --> " + str(predicciones[i][3]) + "\n")
+
+    fichero.close()

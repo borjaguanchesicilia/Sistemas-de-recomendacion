@@ -1,49 +1,36 @@
+import argparse
 import sys
 from metricas import *
-
-
-def lecturaFichero(nombreF):
-
-    global matriz
-
-    fichero = open(nombreF, 'r')
-    valores = []
-    linea = fichero.readline()
-    
-    while linea != "":
-        for j in range(len(linea)):
-            if linea[j] == "-":
-                valores.append(0)
-            elif linea[j] != " " and linea[j] != "\n":
-                valores.append(int(linea[j]))
-        matriz.append(valores); valores = []
-        linea = fichero.readline()
+from predicciones import *
 
 
 def inicializar():
 
     try:
-        nombreF = sys.argv[1]; metrica = int(sys.argv[2]); nVecinos = sys.argv[3]; prediccion = int(sys.argv[4])
+        nombreF = sys.argv[1]; metrica = sys.argv[2]; nVecinos = sys.argv[3]; prediccion = sys.argv[4]
     except:
         print("ERROR: Debe introducir los cuatro argumentos.")
     else:
         try:
-            f = open(nombreF, 'r')
+            open(nombreF, 'r')
         except:
             print("ERROR: El fichero no existe")
         else:
             try:
-                assert(metrica == 1 or metrica == 2 or metrica == 3)
+                assert(metrica.isdigit())
+                metrica = int(metrica); assert(metrica == 1 or metrica == 2 or metrica == 3)
             except:
                 print("ERROR: Seleccione una métrica válida.")
             else:
                 try:
                     assert(nVecinos.isdigit())
+                    nVecinos = int(nVecinos); assert(nVecinos >= 3)
                 except:
                     print("ERROR: Seleccione un número de vecinos válido.")
                 else:
                     try:
-                        assert(prediccion == 1 or prediccion == 2)
+                        assert(prediccion.isdigit())
+                        prediccion = int(prediccion); assert(prediccion == 1 or prediccion == 2)
                     except:
                         print("ERROR: Seleccione una método de predicción válido.")
                     else:
@@ -52,10 +39,31 @@ def inicializar():
                         except:
                             print("ERROR: En el formato del fichero.")
                         else:
-                            correlacionPearson()
-                            distanciaCoseno()
-                            distanciaEuclidea()
-    
+                            try:
+                                assert(nVecinos < len(matriz))
+                            except:
+                                print("ERROR: No puede seleccionar tantos vecinos")
+                            else:
+                                try:
+                                    if metrica == 1:
+                                        sim = correlacionPearson()
+                                    elif metrica == 2:
+                                        sim = distanciaCoseno()
+                                    elif metrica == 3:
+                                        sim = distanciaEuclidea()
+                                except:
+                                    print("ERROR: Se produjo un error en el cálculo de la métrica")
+                                else:
+                                    try:
+                                        if prediccion == 1:
+                                            prediccionSimple(nVecinos, sim)
+                                        elif prediccion == 2: 
+                                            prediccionDiferenciaMedia(nVecinos, sim)
+                                    except:
+                                        print("ERROR: Se produjo un error en el cálculo de la predicción")
+                                    else:
+                                        escrituraFichero()
+                                        print("OK: El resultado se encuentra en el fichero matrizResultado.txt.")
 
 if __name__ == "__main__":
     inicializar()
