@@ -13,8 +13,9 @@
 					3 3 1 5 4
 
 					1 5 5 2 1
-                
-* Se debe de elegir una **métrica a utilizar**, que en este caso se han implementado 3:
+	* Donde cada valor representa la valoración que le ha dado un usuario a un item. El símbolo de - representa a un usuario que no ha valorado ese item, y que debe de ser predecido.
+
+* Se debe de elegir una **métrica a utilizar**. En este caso se han implementado 3:
 
 	* ***Correlación de Pearson*** (1).
 	
@@ -23,10 +24,10 @@
 	* ***Distancia Euclídea*** (3).
 
 
-* A continuación, se tiene que elegir un **número de vecinos** que serán considerados. Cabe destacar, que este número de vecinos no puede ser menor que 3 ni obviamente mayor que el número de usuarios que hayan.
+* A continuación, se tiene que elegir el **número de vecinos** que serán considerados. Cabe destacar que, el número de vecinos no puede ser menor que 3 ni obviamente mayor que el número de usuarios que hayan.
 
 
-* Y por último, se tiene que elegir un **modo de predicción**, que en este caso se han implementado 2 modos:
+* Y por último, se tiene que elegir un **modo de predicción**. En este caso se han implementado 2 modos:
 
 	* ***Predicción simple*** (1).
 	
@@ -39,11 +40,11 @@
 
 			python3.6 main.py matriz.txt 1 3 2
         
-    * **1:** Indica la métrica a utilizar, que como se indicó anteriormente puede ser: ***Correlación de Pearson (1)***, ***Distancia coseno (2)***, ***Distancia Euclídea (3)***.
+    * **1:** Es el segundo argumento, indica la métrica a utilizar, que como se indicó anteriormente puede ser: ***Correlación de Pearson (1)***, ***Distancia coseno (2)***, ***Distancia Euclídea (3)***.
     
-    * **3:** Indica el número de vecinos a considerar.
+    * **3:** Es el tercer argumento, indica el número de vecinos a considerar.
     
-    * **2:** Indica el modo de predicción a utilizar, que como se indicó anteriormente puede ser: ***Predicción simple (1)***, ***Diferencia con la media (2)***.
+    * **2:** Es el cuarto argumento, indica el modo de predicción a utilizar, que como se indicó anteriormente puede ser: ***Predicción simple (1)***, ***Diferencia con la media (2)***.
 
 
 ### Datos sobre el código:
