@@ -27,7 +27,8 @@ def distanciaCoseno():
         else:
             inicio = 0
         for v in range(inicio, len(matriz), 1):
-            similitud.append((u, v, calcularDistanciaCoseno(u, v)))
+            similitud.append({'usuario': u, 'vecino': v, 'sim': calcularDistanciaCoseno(u, v)})
+
 
     return similitud
 
@@ -42,6 +43,6 @@ def distanciaEuclidea():
         else:
             inicio = 0
         for v in range(inicio, len(matriz), 1):
-            similitud.append((u, v, calcularDistanciaEuclidea(u, v)))
+            similitud.append({'usuario': u, 'vecino': v, 'sim': calcularDistanciaEuclidea(u, v)})
 
     return similitud
