@@ -51,6 +51,13 @@ def inicializar():
                                         sim = distanciaCoseno()
                                     elif metrica == 3:
                                         sim = distanciaEuclidea()
+
+                                    sim.sort(key=ordenar)
+                                    sim.reverse()
+
+                                    if metrica == 1:
+                                        sim = normalizar(sim)
+                                    
                                 except:
                                     print("ERROR: Se produjo un error en el cálculo de la métrica")
                                 else:

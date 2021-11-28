@@ -73,3 +73,21 @@ def calcularDistanciaEuclidea(u, v):
     similaridad.append((u, v, distancia))
 
     return distancia
+
+
+def ordenar(val):
+    return val['sim']
+
+
+def normalizar(sim):
+
+    simNormalizadas = []
+
+    for i in sim:
+        if i['sim'] < 0:
+            val = {'usuario': i['usuario'], 'vecino': i['vecino'], 'sim': round(((i['sim']-(-1)) / (1-(-1))), 2)}
+            simNormalizadas.append(val)
+        else:
+            simNormalizadas.append(i)
+
+    return simNormalizadas

@@ -12,7 +12,7 @@ def correlacionPearson():
             inicio = 0
         for v in range(inicio, len(matriz), 1):
             if (u != v):
-                similitud.append((u, v, calcularCorrelacionPearson(u, v)))
+                similitud.append({'usuario': u, 'vecino': v, 'sim': calcularCorrelacionPearson(u, v)})
 
     return similitud
 

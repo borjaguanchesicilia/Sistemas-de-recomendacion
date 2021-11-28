@@ -1,15 +1,14 @@
 from operaciones import *
 
 
-def calcularPrediccionesSimple(u, item, kVecinos, sim):
+def calcularPrediccionesSimple(u, item, kVecinos):
 
     sum1 = 0; sum2 = 0;
 
     for i in kVecinos:
-        for j in range(len(sim)):
-            if ((sim[j][0] ==u) and (sim[j][1] ==i)):
-                sum1 += (sim[j][2] * matriz[i][item])
-                sum2 += abs(sim[j][2])
+        if matriz[i['vecino']][item] != None:
+            sum1 += round(i['sim'] * (matriz[i['vecino']][item]), 2)
+            sum2 += i['sim']
 
     prediccion = round(sum1 / sum2)
 
@@ -35,17 +34,15 @@ def calcularMedia(usuario):
         return round(sum / (len(matriz[usuario]) - cont), 2)
 
 
-def calcularPrediccionesDiferenciaMedia(u, item, kVecinos, sim, mediaU):
+def calcularPrediccionesDiferenciaMedia(u, item, kVecinos, mediaU):
 
     sum1 = 0; sum2 = 0;
 
     for i in kVecinos:
-        if matriz[i][item] != None:
-            mediaV = calcularMedia(i)
-            for j in range(len(sim)):
-                if ((sim[j][0] == u) and (sim[j][1] == i)):
-                    sum1 += round(sim[j][2] * (matriz[i][item] - mediaV), 2)
-                    sum2 += round(abs(sim[j][2]), 2)
+        if matriz[i['vecino']][item] != None:
+            mediaV = calcularMedia(i['vecino'])
+            sum1 += round(i['sim'] * (matriz[i['vecino']][item] - mediaV), 2)
+            sum2 += i['sim']
 
     prediccion = round(mediaU + (sum1 / sum2))
 
